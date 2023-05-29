@@ -7,10 +7,12 @@ import Admin from './components/Admin';
 import Navbar from './components/Navbar';
 import Reservas from './components/Reservas';
 import { auth, db } from './firebase';
+import MisReservas from './components/MisReservas';
 
 function App() {
   const [firebaseUser, setFirebaseUser] = useState(false);
   const [firebaseRol, setFirebaseRol] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const getRole = useCallback(async (Mail) => {
     try {
@@ -37,23 +39,29 @@ function App() {
         } else {
           setFirebaseUser(null);
         }
+        setLoading(false); // Indica que la carga ha finalizado
       });
     };
 
     checkUser();
   }, [getRole]);
 
+  if (loading) {
+    return <p>Loading...</p>; // Muestra un mensaje de carga mientras se verifica el usuario y se obtiene su rol
+  }
+
   console.log('El rol es: ' + firebaseRol);
 
   return firebaseUser !== false ? (
     <Router>
-      <div className='container'>
+      <div className=''>
         <Navbar firebaseUser={firebaseUser} firebaseRol={firebaseRol} />
         <Routes>
           <Route path='/' element={<Inicio />} />
           <Route path='login' element={<Login />} />
-          <Route path='admin' element={<Admin />} />
+          <Route path='admin' element={<Admin firebaseRol={firebaseRol} />} />
           <Route path='reservas' element={<Reservas />} />
+          <Route path='Misreservas' element={<MisReservas />} />
         </Routes>
       </div>
     </Router>

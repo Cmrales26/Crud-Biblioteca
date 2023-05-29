@@ -8,7 +8,7 @@ const Login = () => {
     const [email, setEmail] = React.useState('')
     const [pass, setPass] = React.useState('')
     const [error, setError] = React.useState(null)
-    const [modoRegistro, setModoRegistro] = React.useState(true)
+    const [modoRegistro, setModoRegistro] = React.useState(false)
 
     const guardarDatos = (e) => {
         e.preventDefault()
@@ -73,7 +73,7 @@ const Login = () => {
                 {
                     email: res.user.email,
                     id: res.user.uid,
-                    Rol: "Usuario"
+                    Rol: "aljdlaksdjlk"
                 }
             )
             console.log(res.user);
@@ -124,11 +124,11 @@ const Login = () => {
                                 }
                             </button>
                             <button className='btn btn-outline-primary'
-                                onClick={() => { setModoRegistro(!modoRegistro) }}
+                                onClick={() => {setModoRegistro(!modoRegistro) }}
                                 type='button'
                             >
                                 {
-                                    modoRegistro ? 'Ya estas registrado?' : 'No tienes cuenta?'
+                                    modoRegistro ? '¿Ya estas registrado?' : '¿No tienes cuenta?'
                                 }
                             </button>
                         </div>

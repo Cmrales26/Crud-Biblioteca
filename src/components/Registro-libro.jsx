@@ -98,7 +98,9 @@ const Registro = () => {
   }
 
 
-  // //editar
+  //editar
+
+
   const editar = (elemento) => {
     setModoEdicion(true)//activamos el modo edición
     setNombre(elemento.Nombre);
@@ -107,6 +109,7 @@ const Registro = () => {
     setAño(elemento.año);
     setId(elemento.id)
   }
+
   //editar datos
 
   const editarDatos = async (e) => {
@@ -128,7 +131,7 @@ const Registro = () => {
       return
     }
     try {
-      //const db=firebase.firestore()
+
       await db.collection('Libros').doc(id).update({
         Nombre: nombre,
         Disponibilidad: true,
@@ -138,6 +141,7 @@ const Registro = () => {
       })
 
       window.location.reload() // MIENTRAS VEO QUE SUCEDE CON EL NOMBRE XD
+      
 
       const listaEditada = lista.map(elemento => elemento.id === id ? { id, nombre, Autor, Descripcion, año } :
         elemento
@@ -145,7 +149,6 @@ const Registro = () => {
 
       setLista(listaEditada)//listamos nuevos valores
       setModoEdicion(false)
-      setNombre('')
       setAutor('')
       setDescripcion('')
       setAño('')
@@ -177,7 +180,7 @@ const Registro = () => {
         <input type="text"
           placeholder='Ingrese el Nombre'
           className='form-control mb-2'
-          onChange={(e) => { setNombre(e.target.value) }}
+          onChange={(e) => {setNombre(e.target.value) }}
           value={nombre}
         />
 
