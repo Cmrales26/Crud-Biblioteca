@@ -71,7 +71,13 @@ const Registro = () => {
         }
       ])
 
-      //! ALERTA QUE EL LIBRO SE HA REGISTRADO CON EXITO
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'El libro se ha registrado con éxito',
+        showConfirmButton: false,
+        timer: 1500
+    })
       setNombre('')
       setAutor('')
       setDescripcion('')
@@ -92,7 +98,13 @@ const Registro = () => {
       //const db=firebase.firestore()
       await db.collection('Libros').doc(id).delete()
       const listaFiltrada = lista.filter(elemento => elemento.id !== id)
-      //!ALERTA DE QUE EL LIBRO SE HA ELIMINADO CON EXITO
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'El libro se ha eliminado con éxito',
+        showConfirmButton: false,
+        timer: 1500
+    })
       setLista(listaFiltrada)
     } catch (error) {
       console.error(error);
@@ -142,7 +154,13 @@ const Registro = () => {
         año: año,
         Autor: Autor,
       })
-      //! ALERTA DE QUE EL LIBRO SE HA EDITADO.
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'El libro ha sido editado',
+        showConfirmButton: false,
+        timer: 1500
+    })
       const listaEditada = lista.map(elemento => elemento.id === id ? { id, Nombre: nombre, Disponibilidad, Autor, Descripcion, año } : elemento
       )
 

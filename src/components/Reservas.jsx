@@ -47,7 +47,13 @@ const Reservas = () => {
         Disponibilidad: false,
       });
 
-      //! AQUI VA UNA ALERTA DE QUE EL LIBRO SE HA RESERVADO
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'El libro ha sido reservado',
+        showConfirmButton: false,
+        timer: 1500
+    })
 
       const listaFiltrada = lista.filter((nuevalista) => nuevalista.id !== elemento.id);
       setLista(listaFiltrada);
