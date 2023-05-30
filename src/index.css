@@ -100,6 +100,13 @@
     padding: 2rem;
 }
 
+.MisReservas, .Reservas{
+    min-height: 80vh;
+}
+.MisReservas h3{
+    text-align: center;
+}
+
 .custom-loader {
     --r1: 154%;
     --r2: 68.5%;
@@ -129,6 +136,14 @@
     100% {
         background-position: 0% 100%, 100% 100%, 200% 100%
     }
+}
+
+.cargador{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

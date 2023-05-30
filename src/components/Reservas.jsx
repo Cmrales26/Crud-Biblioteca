@@ -73,7 +73,7 @@ const Reservas = () => {
 
 
   return (
-    <div>
+    <div className='Reservas'>
       <div className="titulo-seccion">
         <h3>Libros</h3>
       </div>

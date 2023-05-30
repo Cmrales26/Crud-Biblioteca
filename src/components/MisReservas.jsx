@@ -65,26 +65,28 @@ const Reservas = () => {
 
 
     return (
-        <div>
+        <div className='MisReservas'>
             <h3>Mis Libros</h3>
-
             <div className="contenedor-cards">
                 <div className="card-grid">
-                    {lista.map((elemento) => (
-                        <div className="card" key={elemento.id}>
-                            <div className="card-body">
-                                <h5 className="card-title">Nombre: {elemento.Nombres}</h5>
-                                <p className="card-text">Autor: {elemento.Autor}</p>
-                                <p className="card-text">Descripción: {elemento.Descripcion}</p>
-                                <p className="card-text">Año: {elemento.año}</p>
+                    {
+                        lista.length > 0 ? lista.map((elemento) => (
+                            <div className="card" key={elemento.id}>
+                                <div className="card-body">
+                                    <h5 className="card-title">Nombre: {elemento.Nombres}</h5>
+                                    <p className="card-text">Autor: {elemento.Autor}</p>
+                                    <p className="card-text">Descripción: {elemento.Descripcion}</p>
+                                    <p className="card-text">Año: {elemento.año}</p>
+                                </div>
+                                <div className="card-footer">
+                                    <button onClick={() => DevolverLibro(elemento)} className="btn btn-warning me-2">
+                                        Devolver
+                                    </button>
+                                </div>
                             </div>
-                            <div className="card-footer">
-                                <button onClick={() => DevolverLibro(elemento)} className="btn btn-warning me-2">
-                                    Devolver
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                        )) : <div className="NORESERVAS">No hay libros reservados</div>
+
+                    }
                 </div>
             </div>
         </div>
