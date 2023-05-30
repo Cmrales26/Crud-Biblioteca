@@ -8,6 +8,7 @@ import Navbar from './components/Navbar';
 import Reservas from './components/Reservas';
 import { auth, db } from './firebase';
 import MisReservas from './components/MisReservas';
+import Footer from './components/Footer';
 
 function App() {
   const [firebaseUser, setFirebaseUser] = useState(false);
@@ -47,7 +48,7 @@ function App() {
   }, [getRole]);
 
   if (loading) {
-    return <p>Loading...</p>; // Muestra un mensaje de carga mientras se verifica el usuario y se obtiene su rol
+    return <div class="custom-loader"></div>; // Muestra un mensaje de carga mientras se verifica el usuario y se obtiene su rol
   }
 
   console.log('El rol es: ' + firebaseRol);
@@ -63,10 +64,11 @@ function App() {
           <Route path='reservas' element={<Reservas />} />
           <Route path='Misreservas' element={<MisReservas />} />
         </Routes>
+        <Footer/>
       </div>
     </Router>
   ) : (
-    <p>Loading...</p>
+    <div class="custom-loader"></div>
   );
 }
 

@@ -12,7 +12,9 @@ const Navbar = (props) => {
   return (
     <div className='navbar navbar-dark bg-dark'>
       {props.firebaseUser !== null ? (<Link className='navbar-brand' to="/">Unicosta - {props.firebaseUser.email} </Link>) : <Link className='navbar-brand' to="/">Unicosta </Link>}
-      <div className='d-flex'>
+      <div className='d-flex navbar-page' id='navbar-page'>
+
+
         <Link className='btn btn-dark' to="/">Inicio</Link>
 
         {props.firebaseUser !== null && props.firebaseRol === 'Admin' ? (
@@ -29,7 +31,7 @@ const Navbar = (props) => {
 
         {
           props.firebaseUser !== null ? (
-            <button className='btn btn-dark'
+            <button className='btn btn-dark iniciar-cerrarsesion'
               onClick={cerrarsesion}
             >Cerrar Sesión</button>
           ) : (
@@ -37,7 +39,6 @@ const Navbar = (props) => {
           )
         }
       </div>
-
     </div>
   )
 }

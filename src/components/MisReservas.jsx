@@ -20,7 +20,6 @@ const Reservas = () => {
     }, [navigate])
 
     const [lista, setLista] = React.useState([]);
-    const [id, setId] = React.useState('');
 
     React.useEffect(() => {
         const obtenerDatos = async () => {
@@ -41,7 +40,7 @@ const Reservas = () => {
 
 
     const DevolverLibro = async (elemento) => {
-        setId(elemento.id);
+
         try {
             const usuario = user.email;
             await db.collection('Libros').doc(elemento.idlibro).update({
@@ -49,22 +48,11 @@ const Reservas = () => {
             });
 
             await db.collection(usuario).doc(elemento.id).delete();
-            const listaFiltrada = lista.filter(elemento => elemento.id !== id)
-            setLista(listaFiltrada)
 
+            const listaFiltrada = lista.filter(nuevalista => nuevalista.id !== elemento.id);
+            setLista(listaFiltrada);
 
-
-
-            window.location.reload();
-
-            // const listaEditada = lista.map(libro => {
-            //   if (libro.id === elemento.id) {
-            //     return { ...libro, Disponibilidad: false };
-            //   }
-            //   return libro;
-            // });
-
-            alert("Se ha Devuelto este libro");
+            //! AQUI VA UNA ALERTA DE QUE EL LIBRO SE HA DEVUELTO
         } catch (error) {
             console.error(error);
         }
@@ -73,29 +61,27 @@ const Reservas = () => {
 
     return (
         <div>
+            <h3>Mis Libros</h3>
 
-            <h3>Libros</h3>
-
-            <div className="card-grid">
-                {lista.map((elemento) => (
-                    <div className="card" key={elemento.id}>
-                        <div className="card-body">
-                            <h5 className="card-title">Nombre: {elemento.Nombres}</h5>
-                            <p className="card-text">Autor: {elemento.Autor}</p>
-                            <p className="card-text">Descripción: {elemento.Descripcion}</p>
-                            <p className="card-text">Año: {elemento.año}</p>
+            <div className="contenedor-cards">
+                <div className="card-grid">
+                    {lista.map((elemento) => (
+                        <div className="card" key={elemento.id}>
+                            <div className="card-body">
+                                <h5 className="card-title">Nombre: {elemento.Nombres}</h5>
+                                <p className="card-text">Autor: {elemento.Autor}</p>
+                                <p className="card-text">Descripción: {elemento.Descripcion}</p>
+                                <p className="card-text">Año: {elemento.año}</p>
+                            </div>
+                            <div className="card-footer">
+                                <button onClick={() => DevolverLibro(elemento)} className="btn btn-warning me-2">
+                                    Devolver
+                                </button>
+                            </div>
                         </div>
-                        <div className="card-footer">
-                            <button onClick={() => DevolverLibro(elemento)} className="btn btn-warning me-2">
-                                Devolver
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-
-
-
         </div>
     )
 }

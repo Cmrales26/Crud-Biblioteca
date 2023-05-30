@@ -93,7 +93,7 @@ const Login = () => {
 
 
     return (
-        <div>
+        <div className='login'>
             <h3 className='text-center text-primary'>
                 {modoRegistro ? 'Registro de Usuarios' : 'Login'}
             </h3>

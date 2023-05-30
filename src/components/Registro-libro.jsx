@@ -6,9 +6,11 @@ const Registro = () => {
   const [lista, setLista] = React.useState([])
   const [nombre, setNombre] = React.useState('')
   const [Descripcion, setDescripcion] = React.useState('');
-  const [año, setAño] = React.useState();
+  const [Disponibilidad, setDisponibilidad] = React.useState(true);
+  const [año, setAño] = React.useState('');
   const [Autor, setAutor] = React.useState('');
   const [id, setId] = React.useState('');
+  const [busqueda, setBusqueda] = React.useState('');
 
   const [modoedicion, setModoEdicion] = React.useState(false)
 
@@ -50,7 +52,6 @@ const Registro = () => {
 
     //registrar en firebase
     try {
-      //const db=firebase.firestore()
       const dato = await db.collection('Libros').add({
         Nombre: nombre,
         Disponibilidad: true,
@@ -69,6 +70,8 @@ const Registro = () => {
           id: dato.id
         }
       ])
+
+      //! ALERTA QUE EL LIBRO SE HA REGISTRADO CON EXITO
       setNombre('')
       setAutor('')
       setDescripcion('')
@@ -80,8 +83,6 @@ const Registro = () => {
   }
 
 
-  //eliminar
-
   const eliminarDato = async (id) => {
     if (modoedicion) {
       setError('No puede eliminar mientras edita el usuario.')
@@ -91,6 +92,7 @@ const Registro = () => {
       //const db=firebase.firestore()
       await db.collection('Libros').doc(id).delete()
       const listaFiltrada = lista.filter(elemento => elemento.id !== id)
+      //!ALERTA DE QUE EL LIBRO SE HA ELIMINADO CON EXITO
       setLista(listaFiltrada)
     } catch (error) {
       console.error(error);
@@ -107,7 +109,8 @@ const Registro = () => {
     setAutor(elemento.Autor);
     setDescripcion(elemento.Descripcion);
     setAño(elemento.año);
-    setId(elemento.id)
+    setId(elemento.id);
+    setDisponibilidad(elemento.Disponibilidad);
   }
 
   //editar datos
@@ -134,35 +137,39 @@ const Registro = () => {
 
       await db.collection('Libros').doc(id).update({
         Nombre: nombre,
-        Disponibilidad: true,
+        Disponibilidad: Disponibilidad,
         Descripcion: Descripcion,
         año: año,
         Autor: Autor,
       })
-
-      window.location.reload() // MIENTRAS VEO QUE SUCEDE CON EL NOMBRE XD
-      
-
-      const listaEditada = lista.map(elemento => elemento.id === id ? { id, nombre, Autor, Descripcion, año } :
-        elemento
+      //! ALERTA DE QUE EL LIBRO SE HA EDITADO.
+      const listaEditada = lista.map(elemento => elemento.id === id ? { id, Nombre: nombre, Disponibilidad, Autor, Descripcion, año } : elemento
       )
 
-      setLista(listaEditada)//listamos nuevos valores
-      setModoEdicion(false)
-      setAutor('')
-      setDescripcion('')
-      setAño('')
-      setError(null)
+      setLista(listaEditada); //listamos nuevos valores
+      setModoEdicion(false);
+      setAutor('');
+      setDescripcion('');
+      setAño('');
+      setId('');
+      setNombre('');
+      setError(null);
     } catch (error) {
       console.error(error);
     }
   }
 
+  const BuscarLibro = (e) => {
+    setBusqueda(e.target.value);
+  };
 
-
+  
+  const listaFiltrada = lista.filter((elemento) =>
+  elemento.Nombre.toLowerCase().includes(busqueda.toLowerCase())
+  );
 
   return (
-    <div className=''>
+    <div className='Registro-libro'>
       {
         modoedicion ? <h2 className='text-center text-success'>Editando Libro</h2> :
           <h2 className='text-center text-primary'>Registro Libros</h2>
@@ -180,7 +187,7 @@ const Registro = () => {
         <input type="text"
           placeholder='Ingrese el Nombre'
           className='form-control mb-2'
-          onChange={(e) => {setNombre(e.target.value) }}
+          onChange={(e) => { setNombre(e.target.value) }}
           value={nombre}
         />
 
@@ -214,26 +221,42 @@ const Registro = () => {
 
         </div>
       </form>
-      <h2 className='text-center text-primary'>Listado de Libros Registrados</h2>
-      <div className="card-grid">
-        {lista.map((elemento) => (
-          <div className="card" key={elemento.id}>
-            <div className="card-body">
-              <h5 className="card-title">Nombre: {elemento.Nombre}</h5>
-              <p className="card-text">Autor: {elemento.Autor}</p>
-              <p className="card-text">Descripción: {elemento.Descripcion}</p>
-              <p className="card-text">Año: {elemento.año}</p>
+
+      <h2 className='text-center'>Listado de Libros Registrados</h2>
+
+      <div className="busqueda">
+        <input
+          className='form-control'
+          type="text"
+          placeholder="Buscar libro"
+          value={busqueda}
+          onChange={BuscarLibro}
+        />
+      </div>
+      
+      
+      <div className="contenedor-cards">
+        <div className="card-grid">
+          {listaFiltrada.map((elemento) => (
+            <div className="card" key={elemento.id}>
+              <div className="card-body">
+                <h5 className="card-title">Nombre: {elemento.Nombre}</h5>
+                <p className="card-text">Autor: {elemento.Autor}</p>
+                <p className="card-text">Descripción: {elemento.Descripcion}</p>
+                <p className="card-text">Año: {elemento.año}</p>
+                <p className="card-text">Estado: {elemento.Disponibilidad ? "Disponible" : "Reservado"}</p>
+              </div>
+              <div className="card-footer">
+                <button onClick={() => eliminarDato(elemento.id)} className="btn btn-danger me-2">
+                  Eliminar
+                </button>
+                <button onClick={() => editar(elemento)} className="btn btn-warning me-2">
+                  Editar
+                </button>
+              </div>
             </div>
-            <div className="card-footer">
-              <button onClick={() => eliminarDato(elemento.id)} className="btn btn-danger me-2">
-                Eliminar
-              </button>
-              <button onClick={() => editar(elemento)} className="btn btn-warning me-2">
-                Editar
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
 
 

@@ -22,11 +22,11 @@ const Admin = (props) => {
     }, [props.firebaseRol, navigate]);
 
     React.useEffect(() => {
-        setLoading(false); // Indica que la carga ha finalizado
+        setLoading(false);
     }, []);
 
     if (loading) {
-        return <p>Loading...</p>; // Muestra un mensaje de carga mientras se obtiene la información del usuario y su rol
+        return <div class="custom-loader"></div>;
     }
 
     return (

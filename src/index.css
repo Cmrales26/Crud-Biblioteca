@@ -3,10 +3,23 @@
     padding: 0;
 }
 
+.tooglenav {
+    display: none;
+}
+
 .card-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(FitAuto, minmax(400px, 1fr));
     grid-gap: 20px;
+}
+
+.contenedor-cards {
+    padding: 3rem;
+    overflow: auto;
+}
+
+.titulo-seccion {
+    text-align: center;
     margin-top: 2rem;
 }
 
@@ -35,8 +48,172 @@
     padding: 0;
 }
 
-.navbar{
+.navbar {
     margin-bottom: 1rem;
     display: flex;
     justify-content: space-around;
+}
+
+.busqueda {
+    margin-top: 2rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.busqueda input {
+    width: 30%;
+}
+
+.contenedor-foter {
+    color: white;
+    padding: 1rem;
+    background-color: #212529;
+    text-align: center;
+}
+
+.BibliotecaUnicosta {
+    padding: 3rem;
+    text-align: justify;
+}
+
+.imagen-root {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.5rem;
+    /* width: 500px; */
+}
+
+.imagen-root img {
+    border-radius: 10px;
+    width: 50%;
+}
+
+.login {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.Registro-libro form {
+    padding: 2rem;
+}
+
+.custom-loader {
+    --r1: 154%;
+    --r2: 68.5%;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background:
+        radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #0D6EFD 80%),
+        radial-gradient(var(--r1) var(--r2) at bottom, #0D6EFD 79.5%, #0000 80%),
+        radial-gradient(var(--r1) var(--r2) at top, #0000 79.5%, #0D6EFD 80%),
+        #E4E4ED;
+    background-size: 50.5% 220%;
+    background-position: -100% 0%, 0% 0%, 100% 0%;
+    background-repeat: no-repeat;
+    animation: p9 2s infinite linear;
+}
+
+@keyframes p9 {
+    33% {
+        background-position: 0% 33%, 100% 33%, 200% 33%
+    }
+
+    66% {
+        background-position: -100% 66%, 0% 66%, 100% 66%
+    }
+
+    100% {
+        background-position: 0% 100%, 100% 100%, 200% 100%
+    }
+}
+
+
+
+@media (min-width: 1441px) {
+    .card-grid {
+        grid-template-columns: repeat(3, minmax(400px, 1fr));
+    }
+}
+
+@media (max-width: 1440px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    }
+}
+
+@media (max-width: 767px) {
+    .card-grid {
+        grid-template-columns: repeat(1, minmax(400px, 1fr));
+    }
+
+    .imagen-root {
+        display: none;
+    }
+
+    .busqueda input {
+        width: 70%;
+    }
+}
+
+@media (max-width: 574px) {
+    .login {
+        padding: 3rem;
+    }
+}
+
+@media (max-width: 460px) {
+    .contenedor-foter h6 {
+        font-size: 12px;
+    }
+
+    .card-title {
+        font-size: 15px;
+    }
+
+    .card-text {
+        font-size: 12px;
+    }
+
+    .card-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+
+    .card-footer button {
+        font-size: 12px;
+    }
+
+    .Registro-libro h2 {
+        font-size: 20px;
+    }
+
+    .navbar a,
+    .iniciar-cerrarsesion {
+        font-size: 15px;
+    }
+}
+
+@media (max-width : 430px) {
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .navbar a,
+    .iniciar-cerrarsesion {
+        font-size: 12px;
+    }
+
+}
+
+@media (max-width: 375px) {
+
+    .navbar a,
+    .iniciar-cerrarsesion {
+        font-size: 9px;
+    }
 }
