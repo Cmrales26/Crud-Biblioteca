@@ -73,7 +73,7 @@ const Login = () => {
                 {
                     email: res.user.email,
                     id: res.user.uid,
-                    Rol: "aljdlaksdjlk"
+                    Rol: "Usuario"
                 }
             )
             console.log(res.user);
