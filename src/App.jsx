@@ -48,7 +48,7 @@ function App() {
   }, [getRole]);
 
   if (loading) {
-    return <div className="cargador"><div class="custom-loader"></div></div> // Muestra un mensaje de carga mientras se verifica el usuario y se obtiene su ro
+    return <div className="cargador"><div className="custom-loader"></div></div> // Muestra un mensaje de carga mientras se verifica el usuario y se obtiene su ro
   }
 
   console.log('El rol es: ' + firebaseRol);

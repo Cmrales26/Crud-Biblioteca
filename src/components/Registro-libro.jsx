@@ -77,7 +77,7 @@ const Registro = () => {
         title: 'El libro se ha registrado con éxito',
         showConfirmButton: false,
         timer: 1500
-    })
+      })
       setNombre('')
       setAutor('')
       setDescripcion('')
@@ -89,22 +89,33 @@ const Registro = () => {
   }
 
 
-  const eliminarDato = async (id) => {
+  const eliminarDato = async (elemento) => {
     if (modoedicion) {
       setError('No puede eliminar mientras edita el usuario.')
       return
     }
+    
+    if (elemento.Disponibilidad === false) {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: 'El libro que desea eliminar se encuentra actualmente Reservado',
+        showConfirmButton: true,
+      });
+      
+      return
+    }
+
     try {
-      //const db=firebase.firestore()
-      await db.collection('Libros').doc(id).delete()
-      const listaFiltrada = lista.filter(elemento => elemento.id !== id)
+      await db.collection('Libros').doc(elemento.id).delete()
+      const listaFiltrada = lista.filter(libro => libro.id !== elemento.id);
       Swal.fire({
         position: 'center',
         icon: 'success',
         title: 'El libro se ha eliminado con éxito',
         showConfirmButton: false,
         timer: 1500
-    })
+      })
       setLista(listaFiltrada)
     } catch (error) {
       console.error(error);
@@ -160,7 +171,7 @@ const Registro = () => {
         title: 'El libro ha sido editado',
         showConfirmButton: false,
         timer: 1500
-    })
+      })
       const listaEditada = lista.map(elemento => elemento.id === id ? { id, Nombre: nombre, Disponibilidad, Autor, Descripcion, año } : elemento
       )
 
@@ -181,9 +192,9 @@ const Registro = () => {
     setBusqueda(e.target.value);
   };
 
-  
+
   const listaFiltrada = lista.filter((elemento) =>
-  elemento.Nombre.toLowerCase().includes(busqueda.toLowerCase())
+    elemento.Nombre.toLowerCase().includes(busqueda.toLowerCase())
   );
 
   return (
@@ -251,8 +262,8 @@ const Registro = () => {
           onChange={BuscarLibro}
         />
       </div>
-      
-      
+
+
       <div className="contenedor-cards">
         <div className="card-grid">
           {listaFiltrada.map((elemento) => (
@@ -265,7 +276,7 @@ const Registro = () => {
                 <p className="card-text">Estado: {elemento.Disponibilidad ? "Disponible" : "Reservado"}</p>
               </div>
               <div className="card-footer">
-                <button onClick={() => eliminarDato(elemento.id)} className="btn btn-danger me-2">
+                <button onClick={() => eliminarDato(elemento)} className="btn btn-danger me-2">
                   Eliminar
                 </button>
                 <button onClick={() => editar(elemento)} className="btn btn-warning me-2">

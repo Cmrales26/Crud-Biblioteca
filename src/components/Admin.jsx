@@ -26,7 +26,7 @@ const Admin = (props) => {
     }, []);
 
     if (loading) {
-        return <div class="custom-loader"></div>;
+        return <div className="custom-loader"></div>;
     }
 
     return (
